@@ -116,42 +116,47 @@ class bank_account():
 # Webbshop
 class webshop():
     def __init__(self):
-        self.kundvagn = kundvagn()
+        self.kundvagn = kundvagn() # Vi deklarer att classen innehåller kundvagn, produkter och Id
         self. produkter = []
         self.id = 0
-    def remove_to_cart(self, id):
-        for i in self.produkter:
+    def remove_to_cart(self, id): # I denna klass har vi en funktion som tillåter oss att plocka varor från shoppen till kundvagnen.
+        for i in self.produkter:# Här kör vi en loop som letar efter alla produkter, om produktens id matchar id vi letar efter flyttas den till kundvagn.
             if i.id == id:
-                self.kundvagn.add_to_cart(id)
-                i.quantity -= 1
+                self.kundvagn.add_to_cart(i)
+                i.quantity -= 1 # För att inte varan ska försvinna helt har vi deklarerat hur många av samma vara vi har när vi lägger in den och att den minskar med en för varje gång vi tar ut den.
                 break
-    def print_all_prducts(self):
+    def print_all_products(self):
         for i in self.produkter:
-            print(i.name, i.pris, "id:",i.id)
+            print(i.name, i.pris,":-", "id:",i.id) # Här har vi en funktion som printar ut alla produkter i webshoppen
 
     def add_produkt(self, produkt):
-        self.produkter.append(produkt)
-        self.id += 1
+        self.produkter.append(produkt) # Här har vi en funktion som tillåter användaren att lägga till produkter till webshoppen.
+        self.id += 1 # Varje gång en produkt läggs till adderas ID med 1.
         produkt.id = self.id
 
 
 class produkt():
-    def __init__(self, pris, name,quantity ):
-        self.pris = pris
-        self.id = None
-        self.name = name
-        self.quantity = quantity
+    def __init__(self, pris, name,quantity ): # Här skappar vi klassen för produkten
+        self.pris = pris # Den innehåller pris som använder sätter
+        self.id = None # Den innehåller ID som automatiskt sätt i funktionen när den läggs till i shoppen
+        self.name = name # Namn på produkten sätts av användaren
+        self.quantity = quantity # Och kvantitet på produkten
 
-class kundvagn():
+class kundvagn(): # Här skapar vi klassen för kundvagn
     def __init__(self):
-        self.varor =[]
+        self.varor =[] # Den har en variabel vid namn varor som är tom
 
-    def add_to_cart(self, produkt):
+    def add_to_cart(self, produkt): # Till detta har vi en funktion för att lägga till varor till sin varukorg
        self.varor.append(produkt)
 
-shop = webshop()
+    def print_all_cart_products(self): # Sist en funktion för att pringa alla varor i korgen
+        for i in self.varor:
+            print(i.name, i.pris,":-", "id:",i.id)
 
-skruvmejsel = produkt(199, "skruvmejsel", 10)
+
+shop = webshop() # Här skapar vi objeket för webshop()
+
+skruvmejsel = produkt(199, "skruvmejsel", 10) # Här skapar vi en massa objekt för klassen produkt
 saw = produkt(250,"saw", 10)
 skifnyckel = produkt(400,"skifnyckel", 10)
 kattstrypare = produkt(99,"kattstrypare", 10)
@@ -176,4 +181,7 @@ shop.add_produkt(Skruvdragare)
 shop.remove_to_cart(skruvmejsel.id)
 shop.remove_to_cart(Skruvdragare.id)
 shop.remove_to_cart(snickarbord.id)
-shop.print_all_prducts()
+shop.print_all_products()
+print("\n")
+
+shop.kundvagn.print_all_cart_products()
